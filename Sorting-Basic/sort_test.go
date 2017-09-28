@@ -126,6 +126,23 @@ func TestBobbleSortAdvance(t *testing.T) {
 	benchmark("bobbleSortAdvance", bobbleSortAdvance, s44)
 }
 
+func TestShellSort(t *testing.T) {
+	s1 := generateTestArr(10, 1, 10)
+	benchmark("shellSort", shellSort, s1)
+	printArr(s1)
+
+	s2 := generateTestArr(100, 1, 100)
+	benchmark("shellSort", shellSort, s2)
+
+	s3 := generateTestArr(1000, 1, 1000)
+	benchmark("shellSort", shellSort, s3)
+
+	s4 := generateTestArr(10000, 1, 10000)
+	benchmark("shellSort", shellSort, s4)
+	s44 := generateNearlyOrderedTestArr(10000, 1, 10000)
+	benchmark("shellSort", shellSort, s44)
+}
+
 //func TestSelectionSortUsingTemplate(t *testing.T) {
 //	s := generateTestArr(10, 1, 10)
 //	var a intSlice = s
