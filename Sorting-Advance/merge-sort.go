@@ -12,7 +12,9 @@ func mergeSortImpl(a []int, left, right int) []int {
 	middle := (right + left) / 2
 	mergeSortImpl(a, left, middle)
 	mergeSortImpl(a, middle+1, right)
-	merge(a, left, middle, right)
+	if a[middle] > a[middle+1] {
+		merge(a, left, middle, right)
+	}
 	return a
 }
 
