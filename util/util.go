@@ -23,6 +23,8 @@ func GenerateTestArr(n, l, r int) []int {
 }
 
 func GenerateNearlyOrderedTestArr(n, l, r int) []int {
+	rand.Seed(time.Now().Unix())
+
 	var ret []int
 	for i := 0; i < n; i++ {
 		ret = append(ret, i+l)
@@ -49,4 +51,14 @@ func Benchmark(name string, f func([]int) []int, a []int) {
 	start := time.Now()
 	f(a)
 	fmt.Println(name+" Using: ", time.Since(start))
+}
+
+func IsOrdered(a []int) bool {
+	for i := 0; i < len(a)-1; i++ {
+		if a[i] > a[i+1] {
+			fmt.Println("array is not ordered")
+			return false
+		}
+	}
+	return true
 }
