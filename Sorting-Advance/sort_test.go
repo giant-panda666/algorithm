@@ -120,3 +120,28 @@ func TestQuickSort2(t *testing.T) {
 	util.Benchmark("quickSort2", quickSort2, s45)
 	util.IsOrdered(s45)
 }
+
+func TestQuickSort3Ways(t *testing.T) {
+	s1 := util.GenerateTestArr(10, 1, 10)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s1)
+	util.PrintArr(s1)
+
+	s2 := util.GenerateTestArr(100, 1, 100)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s2)
+	util.IsOrdered(s2)
+
+	s3 := util.GenerateTestArr(1000000, 1, 10)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s3)
+	util.IsOrdered(s3)
+
+	s4 := util.GenerateTestArr(10000, 1, 10000)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s4)
+	util.IsOrdered(s4)
+	s44 := util.GenerateNearlyOrderedTestArr(10000, 1, 10000)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s44)
+	util.IsOrdered(s44)
+
+	s45 := util.GenerateNearlyOrderedTestArr(1000000, 1, 10)
+	util.Benchmark("quickSort3Ways", quickSort3Ways, s45)
+	util.IsOrdered(s45)
+}
