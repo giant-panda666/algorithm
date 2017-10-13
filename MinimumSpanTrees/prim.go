@@ -1,9 +1,9 @@
 package main
 
-type lazyPrimMST struct {
+type primMST struct {
 	g graph
 	// 横切边集合，每次从横切边中选择最短的边，因此使用最小堆保存
-	pq *minHeap
+	ipq *indexMinHeap
 	// 区分已选择和未选择的节点
 	marked []bool
 	// 最小生成树
@@ -12,10 +12,10 @@ type lazyPrimMST struct {
 	mstWeight Weight
 }
 
-func newLazyPrimMST(g graph) *lazyPrimMST {
-	var t = lazyPrimMST{
+func newPrimMST(g graph) *primMST {
+	var t = primMST{
 		g:         g,
-		pq:        newMinHeap(g.E()),
+		ipq:       newIndexMinHeap(g.V()),
 		marked:    make([]bool, g.V()),
 		mst:       make([]*edge, 0),
 		mstWeight: IntWeight(0),
@@ -24,15 +24,11 @@ func newLazyPrimMST(g graph) *lazyPrimMST {
 	return &t
 }
 
-func (t *lazyPrimMST) Prim() {
+func (t *primMST) Prim() {
 	// 从0节点开始生成
 	t.visit(0)
-	for !t.pq.isEmpty() {
-		e := t.pq.extractMin()
-		if t.marked[e.v()] == t.marked[e.w()] {
-			continue
-		}
-
+	for !t.ipq.isEmpty() {
+		e := t.ipq.extractMin()
 		t.mst = append(t.mst, e)
 		if !t.marked[e.v()] {
 			t.visit(e.v())
@@ -46,23 +42,28 @@ func (t *lazyPrimMST) Prim() {
 	}
 }
 
-func (t *lazyPrimMST) visit(v int) {
+func (t *primMST) visit(v int) {
 	t.marked[v] = true
 
 	i := t.g.iter(v)
-	count := 0
 	for j := i.begin(); !i.end(); j = i.next() {
 		if j != nil && !t.marked[j.other(v)] {
-			count++
-			t.pq.insert(j)
+			tmp := t.ipq.getEdge(j.other(v))
+			if tmp == nil {
+				t.ipq.insert(j.other(v), j)
+			} else {
+				if j.less(tmp) {
+					t.ipq.change(j.other(v), j)
+				}
+			}
 		}
 	}
 }
 
-func (t *lazyPrimMST) result() Weight {
+func (t *primMST) result() Weight {
 	return t.mstWeight
 }
 
-func (t *lazyPrimMST) mstEdges() []*edge {
+func (t *primMST) mstEdges() []*edge {
 	return t.mst
 }

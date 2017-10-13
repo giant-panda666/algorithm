@@ -17,13 +17,9 @@ func newMinHeap(capacity int) *minHeap {
 }
 
 func (h *minHeap) shiftUP(k int) {
-	for k > 1 {
-		if h.data[k].less(h.data[k/2]) {
-			h.data[k], h.data[k/2] = h.data[k/2], h.data[k]
-			k /= 2
-		} else {
-			return
-		}
+	for k > 1 && h.data[k].less(h.data[k/2]) {
+		h.data[k], h.data[k/2] = h.data[k/2], h.data[k]
+		k /= 2
 	}
 }
 
@@ -33,7 +29,7 @@ func (h *minHeap) shiftDOWN(k int) {
 		if j+1 <= h.count && h.data[j+1].less(h.data[j]) {
 			j += 1
 		}
-		if !h.data[k].less(h.data[j]) {
+		if h.data[k].less(h.data[j]) {
 			break
 		}
 		h.data[j], h.data[k] = h.data[k], h.data[j]

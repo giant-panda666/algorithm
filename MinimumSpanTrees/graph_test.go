@@ -8,7 +8,7 @@ import (
 )
 
 func TestGraph(t *testing.T) {
-	N, M := 10, 20
+	N, M := 3000, 10000
 	dg := newDenseGraph(N, false)
 	sg := newSparseGraph(N, false)
 	fmt.Println("denseGraph")
@@ -33,16 +33,39 @@ func showGraph(g graph, N, M int) {
 		a := rand.Int() % N
 		b := rand.Int() % N
 		wt := rand.Int() % 100
+		if a == b {
+			continue
+		}
 		g.addEdge(a, b, IntWeight(wt))
 	}
-	g.show()
+	//	g.addEdge(0, 1, IntWeight(30))
+	//	g.addEdge(0, 2, IntWeight(77))
+	//	g.addEdge(0, 3, IntWeight(23))
+	//	g.addEdge(0, 4, IntWeight(11))
+	//	g.addEdge(1, 3, IntWeight(68))
+	//	g.addEdge(2, 4, IntWeight(15))
+	//	g.addEdge(3, 4, IntWeight(97))
+	//	g.show()
 }
 
 func showPrim(g graph) {
-	primMST := newLazyPrimMST(g)
+	lazyPrimMST := newLazyPrimMST(g)
+	start := time.Now()
+	lazyPrimMST.Prim()
+	fmt.Println("lazyPrimMST using", time.Since(start))
+	//	edges1 := lazyPrimMST.mstEdges()
+	//	for _, v := range edges1 {
+	//		fmt.Println(v.v(), "to", v.w())
+	//	}
+	fmt.Println("lazyprim mstWeight", lazyPrimMST.result())
+
+	primMST := newPrimMST(g)
+	start = time.Now()
 	primMST.Prim()
-	edges := primMST.mstEdges()
-	for _, v := range edges {
-		fmt.Println(v.v(), "to", v.w())
-	}
+	fmt.Println("primMST using", time.Since(start))
+	//	edges2 := primMST.mstEdges()
+	//	for _, v := range edges2 {
+	//		fmt.Println(v.v(), "to", v.w())
+	//	}
+	fmt.Println("prim mstWeight", primMST.result())
 }
