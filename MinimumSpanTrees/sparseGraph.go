@@ -57,6 +57,9 @@ func (g *sparseGraph) show() {
 	for i := 0; i < g.n; i++ {
 		fmt.Println("node", i)
 		for j := 0; j < len(g.g[i]); j++ {
+			if j != 0 && j%8 == 0 {
+				fmt.Println()
+			}
 			fmt.Printf("(to %d, wt:%d)\t", g.g[i][j].w(), g.g[i][j].wt())
 		}
 		fmt.Println()

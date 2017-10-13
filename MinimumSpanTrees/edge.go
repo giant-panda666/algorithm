@@ -2,6 +2,7 @@ package main
 
 type Weight interface {
 	Less(w Weight) bool
+	Add(w Weight) Weight
 }
 
 type IntWeight int
@@ -9,6 +10,11 @@ type IntWeight int
 func (iw IntWeight) Less(iw1 Weight) bool {
 	val := iw1.(IntWeight)
 	return iw < val
+}
+
+func (iw IntWeight) Add(iw1 Weight) Weight {
+	val := iw1.(IntWeight)
+	return iw + val
 }
 
 // 代表a->b的边

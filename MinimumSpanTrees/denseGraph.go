@@ -106,6 +106,7 @@ func (i *denseGraphIterator) next() *edge {
 	for i.index++; i.index < i.dg.n; i.index++ {
 		if i.dg.g[i.v][i.index] != nil {
 			return i.dg.g[i.v][i.index]
+		} else {
 		}
 	}
 	return nil
