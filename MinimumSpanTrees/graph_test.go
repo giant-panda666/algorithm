@@ -8,18 +8,20 @@ import (
 )
 
 func TestGraph(t *testing.T) {
-	N, M := 3000, 10000
+	N, M := 30000, 100000
 	dg := newDenseGraph(N, false)
 	sg := newSparseGraph(N, false)
 	fmt.Println("denseGraph")
 	showGraph(dg, N, M)
 	fmt.Println("denseGraph Prim")
 	showPrim(dg)
+	showKruskal(dg)
 	fmt.Println("=============================================================")
 	fmt.Println("sparseGraph")
 	showGraph(sg, N, M)
 	fmt.Println("sparseGraph Prim")
 	showPrim(sg)
+	showKruskal(sg)
 }
 
 func showGraph(g graph, N, M int) {
@@ -68,4 +70,12 @@ func showPrim(g graph) {
 	//		fmt.Println(v.v(), "to", v.w())
 	//	}
 	fmt.Println("prim mstWeight", primMST.result())
+}
+
+func showKruskal(g graph) {
+	k := newKruskalMST(g)
+	start := time.Now()
+	k.kruskal()
+	fmt.Println("kruskalMST using", time.Since(start))
+	fmt.Println("kruskal mstWeight", k.result())
 }
