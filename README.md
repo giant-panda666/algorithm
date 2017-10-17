@@ -16,3 +16,5 @@ MinimumSpanTrees: minimumSpanTrees using prim and kruskal.
 UnionFind: some set operation.
 
 ShortestPath: dijkstra and bellman-ford.
+
+exercise: some algorithm exercise.
