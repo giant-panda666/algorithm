@@ -1,0 +1,2 @@
+*.go linguist=go
+*.py linguist=python
