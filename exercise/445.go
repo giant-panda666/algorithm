@@ -20,67 +20,58 @@ type ListNode struct {
 	Next *ListNode
 }
 
+type stack struct {
+	data  []*ListNode
+	count int
+}
+
+func (s *stack) push(d *ListNode) {
+	s.data = append(s.data[:s.count], d)
+	s.count++
+}
+
+func (s *stack) pop() *ListNode {
+	s.count--
+	return s.data[s.count]
+}
+
+func (s *stack) isEmpty() bool {
+	return s.count == 0
+}
+
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	var len1, len2 int
-	var h1, h2 = l1, l2
-	for h1 != nil {
-		h1 = h1.Next
-		len1++
+	var s1, s2 stack
+	for l1 != nil {
+		s1.push(l1)
+		l1 = l1.Next
 	}
-	for h2 != nil {
-		h2 = h2.Next
-		len2++
-	}
-
-	h1, h2 = l1, l2
-	var head *ListNode
-	if len1 > len2 {
-		head = l1
-		for i := 0; i < len1-len2; i++ {
-			h1 = h1.Next
-		}
-		for h1 != nil {
-			h1.Val += h2.Val
-			h1 = h1.Next
-			h2 = h2.Next
-		}
-	} else {
-		head = l2
-		for i := 0; i < len2-len1; i++ {
-			h2 = h2.Next
-		}
-		for h2 != nil {
-			h2.Val += h1.Val
-			h1 = h1.Next
-			h2 = h2.Next
-		}
+	for l2 != nil {
+		s2.push(l2)
+		l2 = l2.Next
 	}
 
-	var prev, cur *ListNode = nil, head
-	for cur != nil {
-		if cur.Val >= 10 {
-			if prev == nil {
-				prev = &ListNode{
-					Val:  cur.Val / 10,
-					Next: cur,
-				}
-				cur.Val %= 10
-				head = prev
-				cur = prev
-				prev = nil
-			} else {
-				prev.Val += cur.Val / 10
-				cur.Val %= 10
-				prev = nil
-				cur = head
-			}
-		} else {
-			prev = cur
-			cur = cur.Next
+	var sum = 0
+	var head = new(ListNode)
+	for !s1.isEmpty() || !s2.isEmpty() {
+		if !s1.isEmpty() {
+			tmp := s1.pop()
+			sum += tmp.Val
 		}
+		if !s2.isEmpty() {
+			tmp := s2.pop()
+			sum += tmp.Val
+		}
+		list := new(ListNode)
+		list.Val = sum % 10
+		list.Next = head.Next
+		head.Next = list
+		sum /= 10
 	}
-
-	return head
+	if sum != 0 {
+		head.Val = sum
+		return head
+	}
+	return head.Next
 }
 
 func makeList(a []int) *ListNode {
@@ -110,8 +101,8 @@ func PrintList(h *ListNode) {
 }
 
 func main() {
-	var a1 = []int{2, 4, 3}
-	var a2 = []int{5, 6, 4}
+	var a1 = []int{0}
+	var a2 = []int{7, 3}
 	h1, h2 := makeList(a1), makeList(a2)
 	PrintList(h1)
 	PrintList(h2)

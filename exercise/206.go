@@ -10,12 +10,7 @@ package main
  * }
  */
 func reverseList(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-
-	var prev *ListNode
-	var cur = head
+	var prev, cur *ListNode = nil, head
 	for cur != nil {
 		next := cur.Next
 		cur.Next = prev

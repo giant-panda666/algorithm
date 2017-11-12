@@ -19,48 +19,28 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func reverseBetween(head *ListNode, m int, n int) *ListNode {
-	if head == nil || head.Next == nil {
+func reverseBetween(head *ListNode, m, n int) *ListNode {
+	if m == n {
 		return head
 	}
 
-	var pm, pmPrev *ListNode = head, nil
-	var pn, pnNext *ListNode = head, head.Next
-
-	// find m node and its previous node
-	for i := 0; i < m-1 && pm != nil; i++ {
-		pmPrev = pm
-		pm = pm.Next
+	var prevM = new(ListNode)
+	newHead := prevM
+	prevM.Next = head
+	for i := 1; i < m; i++ {
+		prevM = prevM.Next
 	}
-	// find n node and its next node
-	for i := 0; i < n-1 && pnNext != nil; i++ {
-		pn = pnNext
-		pnNext = pnNext.Next
-	}
-	pn.Next = nil
-
-	// reverse pm and pn
-	tmpHead := reverse(pm, pn)
-
-	if pmPrev != nil {
-		pmPrev.Next = tmpHead
-	} else {
-		head = tmpHead
-	}
-	pm.Next = pnNext
-
-	return head
-}
-
-func reverse(pm, pn *ListNode) *ListNode {
-	var head, cur *ListNode = nil, pm
-	for cur != nil {
+	tail := prevM.Next
+	var prev, cur *ListNode = nil, prevM.Next
+	for i := 0; i <= n-m; i++ {
 		next := cur.Next
-		cur.Next = head
-		head = cur
+		cur.Next = prev
+		prev = cur
 		cur = next
 	}
-	return head
+	prevM.Next = prev
+	tail.Next = cur
+	return newHead.Next
 }
 
 func main() {
