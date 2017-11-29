@@ -1,11 +1,5 @@
 package main
 
-import "fmt"
-
-func main() {
-	fmt.Println("vim-go")
-}
-
 type MaxHeap struct {
 	item     []int
 	count    int
@@ -36,7 +30,7 @@ func (m *MaxHeap) shiftUp(k int) {
 }
 
 func (m *MaxHeap) shiftDown(k int) {
-	for 2*k < m.count {
+	for 2*k <= m.count {
 		j := 2 * k
 		if j+1 < m.count && m.item[j+1] > m.item[j] {
 			j++
