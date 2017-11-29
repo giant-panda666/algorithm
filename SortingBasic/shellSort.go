@@ -11,7 +11,7 @@ func shellSort(a []int) []int {
 		for i := stepSize; i < n; i++ {
 			j := i
 			tmp := a[i]
-			for ; j >= stepSize && a[j-stepSize] > a[j]; j -= stepSize {
+			for ; j >= stepSize && a[j-stepSize] > tmp; j -= stepSize {
 				a[j] = a[j-stepSize]
 			}
 			a[j] = tmp

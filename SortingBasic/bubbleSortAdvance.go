@@ -11,6 +11,8 @@ func bobbleSortAdvance(a []int) []int {
 			}
 			if isOrdered {
 				index = j
+			} else {
+				index = 0
 			}
 		}
 	}
