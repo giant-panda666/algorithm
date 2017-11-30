@@ -40,10 +40,10 @@ func (u *quickUnionFindSize) union(p, q int) {
 	}
 
 	if u.sz[pID] > u.sz[qID] {
-		u.parent[pID] = qID
-		u.sz[pID] += u.sz[qID]
-	} else {
 		u.parent[qID] = pID
 		u.sz[qID] += u.sz[pID]
+	} else {
+		u.parent[pID] = qID
+		u.sz[pID] += u.sz[qID]
 	}
 }
