@@ -17,4 +17,4 @@ UnionFind: some set operation.
 
 ShortestPath: dijkstra and bellman-ford.
 
-exercise: some algorithm exercise.
+exercise: some algorithm exercise from leetcode.
